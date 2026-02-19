@@ -1,4 +1,4 @@
-# SQL
+# SQL Notes - Amjad Ali Kudsi
 
 ## Core
 
