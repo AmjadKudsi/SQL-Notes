@@ -178,9 +178,42 @@ GROUP BY s.machine_id;
 
 ---
 
+### [577. Employee Bonus](https://leetcode.com/problems/employee-bonus/)
+
+```sql
+SELECT e.name, b.bonus FROM employee e LEFT JOIN bonus b ON e.empId = b.empId
+WHERE bonus < 1000 OR bonus IS NULL;
+```
+
+---
+
+### [1280. Students and Examinations](https://leetcode.com/problems/students-and-examinations/)
+
+```sql
+SELECT st.student_id, st.student_name, su.subject_name, COUNT(e.subject_name) AS attended_exams
+FROM students st CROSS JOIN subjects su LEFT JOIN examinations e
+    ON st.student_id = e.student_id AND e.subject_name = su.subject_name
+GROUP BY st.student_id, st.student_name, su.subject_name
+ORDER BY st.student_id, st.student_name;
+```
+
+---
+
 ## 🟡 Medium
 
-*Coming soon...*
+---
+
+### [570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports/)
+
+```sql
+SELECT e.name FROM employee e
+WHERE e.id IN (SELECT managerId FROM employee
+                WHERE managerId IS NOT NULL
+                GROUP BY managerId
+                HAVING COUNT(*) > 4);
+```
+
+---
 
 ---
 
