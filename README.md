@@ -20,6 +20,10 @@
 | 14 | [Average Selling Price](#1251-average-selling-price) | 🟢 Easy | `LEFT JOIN`, `NULLIF`, pre-agg | 81.32% |
 | 15 | [Managers with at Least 5 Direct Reports](#570-managers-with-at-least-5-direct-reports) | 🟡 Medium | `IN`, `JOIN` + `HAVING` | 93.51% |
 | 16 | [Confirmation Rate](#1934-confirmation-rate) | 🟡 Medium | `AVG`, `IF`, pre-agg subquery | 82.92% |
+| 17 | [Project Employees I](#1075-project-employees-i) | 🟢 Easy | `AVG`, `SUM`/`COUNT` | 85.58% |
+| 18 | [Percentage of Users Attended a Contest](#1633-percentage-of-users-attended-a-contest) | 🟢 Easy | Scalar subquery, `CROSS JOIN` | 73.76% |
+| 19 | [Queries Quality and Percentage](#1211-queries-quality-and-percentage) | 🟢 Easy | `AVG`, `SUM`, `CASE WHEN` | 96.29% |
+| 20 | [Monthly Transactions I](#1193-monthly-transactions-i) | 🟡 Medium | `DATE_FORMAT`, `LEFT`, `CASE WHEN` | 87.21% |
 
 > 💡 **Reading the table:** Each problem links directly to its solution below. Where multiple approaches are provided, the *Best Performance* column shows the top `🎯 Beats` score achieved.
 
@@ -372,6 +376,120 @@ LEFT JOIN (
 ) c ON s.user_id = c.user_id;
 ```
 > 🎯 **Beats:** 82.92%
+
+---
+
+### [1075. Project Employees I](https://leetcode.com/problems/project-employees-i/)
+
+**Using AVG**
+```sql
+SELECT project_id, ROUND(AVG(E.experience_years), 2) AS average_years
+FROM project P JOIN employee E ON P.employee_id = E.employee_id
+GROUP BY project_id;
+```
+> 🎯 **Beats:** 70.76%
+
+**Using SUM / COUNT**
+```sql
+SELECT project_id, ROUND(SUM(E.experience_years)/COUNT(*), 2) AS average_years
+FROM project P JOIN employee E ON P.employee_id = E.employee_id
+GROUP BY project_id;
+```
+> 🎯 **Beats:** 85.58%
+
+---
+
+### [1633. Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest/)
+
+**Using Scalar Subquery**
+```sql
+SELECT contest_id,
+    ROUND((COUNT(user_id)/(SELECT COUNT(*) FROM users)) * 100, 2) AS percentage
+FROM register
+GROUP BY contest_id
+ORDER BY percentage DESC, contest_id;
+```
+> 🎯 **Beats:** 73.76%
+
+**Using CROSS JOIN**
+```sql
+SELECT contest_id,
+    ROUND((COUNT(R.user_id)/ U.total) * 100, 2) AS percentage
+FROM register R
+CROSS JOIN (SELECT COUNT(*) AS total FROM users) U
+GROUP BY contest_id
+ORDER BY percentage DESC, contest_id;
+```
+> 🎯 **Beats:** 73.23%
+
+---
+
+### [1211. Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage/)
+
+**Using SUM**
+```sql
+SELECT query_name,
+    ROUND(AVG(rating/position), 2) AS quality,
+    ROUND(SUM(rating < 3)*100/COUNT(rating), 2) AS poor_query_percentage
+FROM queries
+GROUP BY query_name;
+```
+> 🎯 **Beats:** 42.94%
+
+**Using CASE WHEN**
+```sql
+SELECT query_name,
+    ROUND(AVG(rating / position), 2) AS quality,
+    ROUND(AVG(CASE WHEN rating < 3 THEN 1 ELSE 0 END) * 100, 2) AS poor_query_percentage
+FROM queries
+WHERE query_name IS NOT NULL
+GROUP BY query_name;
+```
+> 🎯 **Beats:** 96.29%
+
+---
+
+## 🟡 Medium (continued)
+
+---
+
+### [1193. Monthly Transactions I](https://leetcode.com/problems/monthly-transactions-i/)
+
+**Using DATE_FORMAT**
+```sql
+SELECT DATE_FORMAT(trans_date, '%Y-%m') AS month, country,
+    COUNT(trans_date) AS trans_count,
+    SUM(state='approved') AS approved_count,
+    SUM(amount) AS trans_total_amount,
+    SUM(CASE WHEN state='approved' THEN amount ELSE 0 END) AS approved_total_amount
+FROM transactions
+GROUP BY month, country;
+```
+> 🎯 **Beats:** 39.53%
+
+**Using LEFT**
+```sql
+SELECT LEFT(trans_date, 7) AS month, country,
+    COUNT(trans_date) AS trans_count,
+    SUM(state='approved') AS approved_count,
+    SUM(amount) AS trans_total_amount,
+    SUM(CASE WHEN state='approved' THEN amount ELSE 0 END) AS approved_total_amount
+FROM transactions
+GROUP BY month, country;
+```
+> 🎯 **Beats:** 78.97%
+
+**Using CASE WHEN x2**
+```sql
+SELECT LEFT(trans_date, 7) AS month, country,
+    COUNT(trans_date) AS trans_count,
+    SUM(CASE WHEN state = 'approved' THEN 1 ELSE 0 END) AS approved_count,
+    SUM(amount) AS trans_total_amount,
+    SUM(CASE WHEN state='approved' THEN amount ELSE 0 END) AS approved_total_amount
+FROM transactions
+GROUP BY month, country;
+```
+> 🎯 **Beats:** 87.21%
 
 ---
 
