@@ -87,6 +87,7 @@ FROM (
 WHERE prev_date = recordDate - INTERVAL '1' DAY
   AND temperature > prev_temp;
 ```
+> 🎯 **Beats:** 39.26%
 
 **Using Self Join**
 ```sql
@@ -96,6 +97,7 @@ JOIN weather w2
   ON w2.recordDate = w1.recordDate - INTERVAL '1' DAY
 WHERE w1.temperature > w2.temperature;
 ```
+> 🎯 **Beats:** 79.80%
 
 **Using Correlated Subquery**
 ```sql
@@ -105,6 +107,7 @@ WHERE w1.temperature > (
   WHERE w2.recordDate = w1.recordDate - INTERVAL '1' DAY
 );
 ```
+> 🎯 **Beats:** 86.73%
 
 **Using EXISTS**
 ```sql
@@ -117,6 +120,7 @@ WHERE EXISTS (
     AND w1.temperature > w2.temperature
 );
 ```
+> 🎯 **Beats:** 93.08%
 
 **Using Window Function with DATE_DIFF**
 ```sql
@@ -133,21 +137,11 @@ FROM (
 WHERE DATE_DIFF(recordDate, prev_date, DAY) = 1
   AND temperature > prev_temp;
 ```
+> 🎯 **Beats:** 98.38%
 
 ---
 
 ### [1661. Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
-
-**Using Correlated Subquery**
-```sql
-SELECT machine_id, ROUND(AVG((SELECT a2.timestamp FROM activity a2
-  WHERE a2.machine_id = a1.machine_id
-    AND a2.process_id = a1.process_id
-    AND a2.activity_type = 'end') - a1.timestamp), 3) AS processing_time
-FROM activity a1
-WHERE a1.activity_type = 'start'
-GROUP BY machine_id;
-```
 
 **Using Conditional Aggregation in Subquery**
 ```sql
@@ -163,6 +157,19 @@ FROM (
 ) t
 GROUP BY machine_id;
 ```
+> 🎯 **Beats:** 63.83%
+
+**Using Correlated Subquery**
+```sql
+SELECT machine_id, ROUND(AVG((SELECT a2.timestamp FROM activity a2
+  WHERE a2.machine_id = a1.machine_id
+    AND a2.process_id = a1.process_id
+    AND a2.activity_type = 'end') - a1.timestamp), 3) AS processing_time
+FROM activity a1
+WHERE a1.activity_type = 'start'
+GROUP BY machine_id;
+```
+> 🎯 **Beats:** 68.33%
 
 **Using Self Join**
 ```sql
@@ -175,20 +182,29 @@ JOIN activity e
 WHERE s.activity_type = 'start'
 GROUP BY s.machine_id;
 ```
+> 🎯 **Beats:** 77.22%
 
 ---
 
 ### [577. Employee Bonus](https://leetcode.com/problems/employee-bonus/)
 
+**Simple**
 ```sql
 SELECT e.name, b.bonus FROM employee e LEFT JOIN bonus b ON e.empId = b.empId
 WHERE bonus < 1000 OR bonus IS NULL;
+```
+
+**Using COALESCE**
+```sql
+SELECT e.name, b.bonus FROM employee e LEFT JOIN bonus b ON e.empId = b.empId
+WHERE COALESCE(b.bonus, 0) < 1000;
 ```
 
 ---
 
 ### [1280. Students and Examinations](https://leetcode.com/problems/students-and-examinations/)
 
+**Using CROSS JOIN**
 ```sql
 SELECT st.student_id, st.student_name, su.subject_name, COUNT(e.subject_name) AS attended_exams
 FROM students st CROSS JOIN subjects su LEFT JOIN examinations e
@@ -196,6 +212,72 @@ FROM students st CROSS JOIN subjects su LEFT JOIN examinations e
 GROUP BY st.student_id, st.student_name, su.subject_name
 ORDER BY st.student_id, st.student_name;
 ```
+> 🎯 **Beats:** 52.62%
+
+**Using LEFT JOIN**
+```sql
+SELECT S.student_id, S.student_name, Su.subject_name, COUNT(E.student_id) AS attended_exams
+FROM students S
+JOIN subjects Su
+LEFT JOIN examinations E
+  ON S.student_id = E.student_id
+  AND Su.subject_name = E.subject_name
+GROUP BY S.student_id, Su.subject_name
+ORDER BY student_id, subject_name;
+```
+> 🎯 **Beats:** 85.65%
+
+---
+
+### [620. Not Boring Movies](https://leetcode.com/problems/not-boring-movies/)
+
+**Using MOD (%)**
+```sql
+SELECT id, movie, description, rating FROM cinema
+WHERE id % 2 = 1 AND description != 'boring'
+ORDER BY rating DESC;
+```
+> 🎯 **Beats:** 79.67%
+
+**Using Bitwise AND (&)**
+```sql
+SELECT id, movie, description, rating FROM cinema
+WHERE id & 1 = 1 AND description <> 'boring'
+ORDER BY rating DESC;
+```
+> 🎯 **Beats:** 81.48%
+
+---
+
+### [1251. Average Selling Price](https://leetcode.com/problems/average-selling-price/)
+
+**JOIN first, AGG later**
+```sql
+SELECT P.product_id,
+  ROUND(COALESCE(SUM(P.price * U.units) / NULLIF(SUM(U.units), 0), 0), 2) AS average_price
+FROM prices P
+LEFT JOIN unitssold U
+  ON P.product_id = U.product_id
+  AND U.purchase_date BETWEEN P.start_date AND P.end_date
+GROUP BY P.product_id;
+```
+> 🎯 **Beats:** 35.36%
+
+**AGG first, JOIN later**
+```sql
+SELECT P.product_id,
+  ROUND(IFNULL(SUM(P.price * units_sum) / SUM(units_sum), 0), 2) AS average_price
+FROM prices P
+LEFT JOIN (
+  SELECT product_id, purchase_date, SUM(units) AS units_sum
+  FROM unitssold
+  GROUP BY product_id, purchase_date
+) U
+  ON P.product_id = U.product_id
+  AND U.purchase_date BETWEEN P.start_date AND P.end_date
+GROUP BY P.product_id;
+```
+> 🎯 **Beats:** 81.32%
 
 ---
 
@@ -205,6 +287,7 @@ ORDER BY st.student_id, st.student_name;
 
 ### [570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports/)
 
+**Using IN**
 ```sql
 SELECT e.name FROM employee e
 WHERE e.id IN (SELECT managerId FROM employee
@@ -212,8 +295,58 @@ WHERE e.id IN (SELECT managerId FROM employee
                 GROUP BY managerId
                 HAVING COUNT(*) > 4);
 ```
+> 🎯 **Beats:** 91.05%
+
+**Using JOIN**
+```sql
+SELECT e.name FROM employee e
+JOIN (
+  SELECT managerId FROM employee
+  WHERE managerId IS NOT NULL
+  GROUP BY managerId
+  HAVING COUNT(*) > 4
+) m ON e.id = m.managerId;
+```
+> 🎯 **Beats:** 93.51%
 
 ---
+
+### [1934. Confirmation Rate](https://leetcode.com/problems/confirmation-rate/)
+
+**Using COALESCE**
+```sql
+SELECT S.user_id,
+  ROUND(COALESCE(AVG(C.action = 'confirmed'), 0), 2) AS confirmation_rate
+FROM signups S
+LEFT JOIN confirmations C ON S.user_id = C.user_id
+GROUP BY user_id;
+```
+> 🎯 **Beats:** 39.9%
+
+**Using IF**
+```sql
+SELECT S.user_id,
+  ROUND(AVG(IF(c.action = 'confirmed', 1, 0)), 2) AS confirmation_rate
+FROM signups S
+LEFT JOIN confirmations C ON S.user_id = C.user_id
+GROUP BY user_id;
+```
+> 🎯 **Beats:** 64.95%
+
+**AGG first, JOIN later**
+```sql
+SELECT s.user_id,
+  ROUND(COALESCE(c.confirmed / c.total, 0), 2) AS confirmation_rate
+FROM Signups s
+LEFT JOIN (
+  SELECT user_id,
+    SUM(action = 'confirmed') AS confirmed,
+    COUNT(*) AS total
+  FROM Confirmations
+  GROUP BY user_id
+) c ON s.user_id = c.user_id;
+```
+> 🎯 **Beats:** 82.92%
 
 ---
 
