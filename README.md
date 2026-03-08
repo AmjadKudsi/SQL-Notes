@@ -479,8 +479,4 @@ GROUP BY month, country;
 ```
 > 🎯 **Beats:** 87.21%
 
----
 
-## 🔴 Hard
-
-*Coming soon...*
