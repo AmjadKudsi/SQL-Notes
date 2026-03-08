@@ -29,10 +29,6 @@
 
 ---
 
-## 🟢 Easy
-
----
-
 ### [1757. Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/)
 
 ```sql
@@ -310,10 +306,6 @@ GROUP BY P.product_id;
 
 ---
 
-## 🟡 Medium
-
----
-
 ### [570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports/)
 
 **Using IN**
@@ -446,10 +438,6 @@ WHERE query_name IS NOT NULL
 GROUP BY query_name;
 ```
 > 🎯 **Beats:** 96.29%
-
----
-
-## 🟡 Medium (continued)
 
 ---
 
