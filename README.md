@@ -4,22 +4,22 @@
 
 | # | Problem | Difficulty | Key Technique(s) | Best Performance |
 |---|---------|------------|------------------|-----------------|
-| 1757 | [Recyclable and Low Fat Products](#1757-recyclable-and-low-fat-products) | 🟢 Easy | `WHERE` filter | — |
-| 584 | [Find Customer Referee](#584-find-customer-referee) | 🟢 Easy | `WHERE` + `IS NULL` | — |
-| 595 | [Big Countries](#595-big-countries) | 🟢 Easy | `WHERE` + `OR` | — |
-| 1148 | [Article Views I](#1148-article-views-i) | 🟢 Easy | `DISTINCT`, self-compare | — |
-| 1683 | [Invalid Tweets](#1683-invalid-tweets) | 🟢 Easy | `LENGTH()` | — |
-| 1378 | [Replace Employee ID With The Unique Identifier](#1378-replace-employee-id-with-the-unique-identifier) | 🟢 Easy | `LEFT JOIN` | — |
-| 1068 | [Product Sales Analysis I](#1068-product-sales-analysis-i) | 🟢 Easy | `JOIN` | — |
-| 1581 | [Customer Who Visited but Did Not Make Any Transactions](#1581-customer-who-visited-but-did-not-make-any-transactions) | 🟢 Easy | `LEFT JOIN` + `IS NULL` | — |
-| 197 | [Rising Temperature](#197-rising-temperature) | 🟢 Easy | `LAG`, Self Join, `EXISTS` | 98.38% |
-| 1661 | [Average Time of Process per Machine](#1661-average-time-of-process-per-machine) | 🟢 Easy | Conditional Agg, Self Join | 77.22% |
-| 577 | [Employee Bonus](#577-employee-bonus) | 🟢 Easy | `LEFT JOIN`, `COALESCE` | — |
-| 1280 | [Students and Examinations](#1280-students-and-examinations) | 🟢 Easy | `CROSS JOIN`, `LEFT JOIN` | 85.65% |
-| 620 | [Not Boring Movies](#620-not-boring-movies) | 🟢 Easy | `MOD`, Bitwise `&` | 81.48% |
-| 1251 | [Average Selling Price](#1251-average-selling-price) | 🟢 Easy | `LEFT JOIN`, `NULLIF`, pre-agg | 81.32% |
-| 570 | [Managers with at Least 5 Direct Reports](#570-managers-with-at-least-5-direct-reports) | 🟡 Medium | `IN`, `JOIN` + `HAVING` | 93.51% |
-| 1934 | [Confirmation Rate](#1934-confirmation-rate) | 🟡 Medium | `AVG`, `IF`, pre-agg subquery | 82.92% |
+| 1 | [Recyclable and Low Fat Products](#1757-recyclable-and-low-fat-products) | 🟢 Easy | `WHERE` filter | — |
+| 2 | [Find Customer Referee](#584-find-customer-referee) | 🟢 Easy | `WHERE` + `IS NULL` | — |
+| 3 | [Big Countries](#595-big-countries) | 🟢 Easy | `WHERE` + `OR` | — |
+| 4 | [Article Views I](#1148-article-views-i) | 🟢 Easy | `DISTINCT`, self-compare | — |
+| 5 | [Invalid Tweets](#1683-invalid-tweets) | 🟢 Easy | `LENGTH()` | — |
+| 6 | [Replace Employee ID With The Unique Identifier](#1378-replace-employee-id-with-the-unique-identifier) | 🟢 Easy | `LEFT JOIN` | — |
+| 7 | [Product Sales Analysis I](#1068-product-sales-analysis-i) | 🟢 Easy | `JOIN` | — |
+| 8 | [Customer Who Visited but Did Not Make Any Transactions](#1581-customer-who-visited-but-did-not-make-any-transactions) | 🟢 Easy | `LEFT JOIN` + `IS NULL` | — |
+| 9 | [Rising Temperature](#197-rising-temperature) | 🟢 Easy | `LAG`, Self Join, `EXISTS` | 98.38% |
+| 10 | [Average Time of Process per Machine](#1661-average-time-of-process-per-machine) | 🟢 Easy | Conditional Agg, Self Join | 77.22% |
+| 11 | [Employee Bonus](#577-employee-bonus) | 🟢 Easy | `LEFT JOIN`, `COALESCE` | — |
+| 12 | [Students and Examinations](#1280-students-and-examinations) | 🟢 Easy | `CROSS JOIN`, `LEFT JOIN` | 85.65% |
+| 13 | [Not Boring Movies](#620-not-boring-movies) | 🟢 Easy | `MOD`, Bitwise `&` | 81.48% |
+| 14 | [Average Selling Price](#1251-average-selling-price) | 🟢 Easy | `LEFT JOIN`, `NULLIF`, pre-agg | 81.32% |
+| 15 | [Managers with at Least 5 Direct Reports](#570-managers-with-at-least-5-direct-reports) | 🟡 Medium | `IN`, `JOIN` + `HAVING` | 93.51% |
+| 16 | [Confirmation Rate](#1934-confirmation-rate) | 🟡 Medium | `AVG`, `IF`, pre-agg subquery | 82.92% |
 
 > 💡 **Reading the table:** Each problem links directly to its solution below. Where multiple approaches are provided, the *Best Performance* column shows the top `🎯 Beats` score achieved.
 
