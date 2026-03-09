@@ -1,5 +1,7 @@
 # LeetCode SQL 50 — MySQL Solutions
 
+## 📚 Index
+
 | # | Problem | Difficulty | Key Technique(s) | Best Performance |
 |---|---------|------------|------------------|-----------------|
 | 1 | [Recyclable and Low Fat Products](#1757-recyclable-and-low-fat-products) | 🟢 Easy | `WHERE` filter | — |
@@ -22,6 +24,13 @@
 | 18 | [Percentage of Users Attended a Contest](#1633-percentage-of-users-attended-a-contest) | 🟢 Easy | Scalar subquery, `CROSS JOIN` | 73.76% |
 | 19 | [Queries Quality and Percentage](#1211-queries-quality-and-percentage) | 🟢 Easy | `AVG`, `SUM`, `CASE WHEN` | 96.29% |
 | 20 | [Monthly Transactions I](#1193-monthly-transactions-i) | 🟡 Medium | `DATE_FORMAT`, `LEFT`, `CASE WHEN` | 87.21% |
+| 21 | [Immediate Food Delivery II](#1174-immediate-food-delivery-ii) | 🟡 Medium | Subquery, `MIN` | 90.67% |
+| 22 | [Game Play Analysis IV](#550-game-play-analysis-iv) | 🟡 Medium | `CTE`, Subquery, Window Function | 96.18% |
+| 23 | [Number of Unique Subjects Taught by Each Teacher](#2356-number-of-unique-subjects-taught-by-each-teacher) | 🟢 Easy | `COUNT DISTINCT` | 91.25% |
+| 24 | [User Activity for the Past 30 Days I](#1141-user-activity-for-the-past-30-days-i) | 🟢 Easy | `BETWEEN`, `COUNT DISTINCT` | 81.29% |
+| 25 | [Product Sales Analysis III](#1070-product-sales-analysis-iii) | 🟡 Medium | `JOIN`, `RANK()`, Tuple `IN` | 84.71% |
+| 26 | [Classes With at Least 5 Students](#596-classes-with-at-least-5-students) | 🟢 Easy | `HAVING`, `COUNT DISTINCT` | — |
+| 27 | [Find Followers Count](#1729-find-followers-count) | 🟢 Easy | — | — |
 
 > 💡 **Reading the table:** Each problem links directly to its solution below. Where multiple approaches are provided, the *Best Performance* column shows the top `🎯 Beats` score achieved.
 
@@ -477,4 +486,179 @@ GROUP BY month, country;
 ```
 > 🎯 **Beats:** 87.21%
 
+---
 
+### [1174. Immediate Food Delivery II](https://leetcode.com/problems/immediate-food-delivery-ii/)
+
+```sql
+SELECT ROUND(SUM(first_order = first_del) * 100 / COUNT(*), 2) AS immediate_percentage
+FROM (
+  SELECT customer_id, MIN(order_date) AS first_order,
+    MIN(customer_pref_delivery_date) AS first_del
+  FROM delivery
+  GROUP BY customer_id
+) f;
+```
+> 🎯 **Beats:** 90.67%
+
+---
+
+### [550. Game Play Analysis IV](https://leetcode.com/problems/game-play-analysis-iv/)
+
+**Using CTE**
+```sql
+WITH first_login AS (
+  SELECT player_id, MIN(event_date) AS first_date
+  FROM activity
+  GROUP BY player_id
+)
+SELECT ROUND(COUNT(A.player_id) / COUNT(F.player_id), 2) AS fraction
+FROM first_login F
+LEFT JOIN activity A
+  ON F.player_id = A.player_id
+  AND A.event_date = DATE_ADD(F.first_date, INTERVAL 1 DAY);
+```
+> 🎯 **Beats:** 18.92%
+
+**Using Subquery**
+```sql
+SELECT ROUND(COUNT(A.player_id) / COUNT(F.player_id), 2) AS fraction
+FROM (
+  SELECT player_id, MIN(event_date) AS first_date
+  FROM activity
+  GROUP BY player_id
+) F
+LEFT JOIN activity A
+  ON F.player_id = A.player_id
+  AND A.event_date = DATE_ADD(F.first_date, INTERVAL 1 DAY);
+```
+> 🎯 **Beats:** 82.32%
+
+**Using Window Function**
+```sql
+SELECT ROUND(
+  SUM(CASE WHEN DATEDIFF(event_date, first_date) = 1 THEN 1 ELSE 0 END) /
+  COUNT(DISTINCT player_id), 2
+) AS fraction
+FROM (
+  SELECT player_id, event_date,
+    MIN(event_date) OVER (PARTITION BY player_id) AS first_date
+  FROM Activity
+) T;
+```
+> 🎯 **Beats:** 96.18%
+
+---
+
+### [2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/)
+
+```sql
+SELECT teacher_id, COUNT(DISTINCT subject_id) AS cnt
+FROM teacher
+GROUP BY teacher_id;
+```
+> 🎯 **Beats:** 91.25%
+
+---
+
+### [1141. User Activity for the Past 30 Days I](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/)
+
+**Using BETWEEN**
+```sql
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM activity
+WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+GROUP BY activity_date;
+```
+> 🎯 **Beats:** 60.32%
+
+**Using Subquery**
+```sql
+SELECT activity_date AS day, COUNT(user_id) AS active_users
+FROM (
+  SELECT DISTINCT activity_date, user_id
+  FROM activity
+  WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+) A
+GROUP BY activity_date;
+```
+> 🎯 **Beats:** 57.18%
+
+**Using Direct Range Operators**
+```sql
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM activity
+WHERE activity_date > '2019-06-27' AND activity_date <= '2019-07-27'
+GROUP BY activity_date;
+```
+> 🎯 **Beats:** 81.29%
+
+---
+
+### [1070. Product Sales Analysis III](https://leetcode.com/problems/product-sales-analysis-iii/)
+
+**Using JOIN**
+```sql
+SELECT S.product_id, S.year AS first_year, S.quantity, S.price
+FROM sales S
+JOIN (
+  SELECT product_id, MIN(year) AS first_year FROM sales
+  GROUP BY product_id
+) F ON S.product_id = F.product_id AND S.year = F.first_year;
+```
+> 🎯 **Beats:** 18.85%
+
+**Using RANK()**
+```sql
+SELECT product_id, year AS first_year, quantity, price
+FROM (
+  SELECT product_id, year, quantity, price,
+    RANK() OVER (PARTITION BY product_id ORDER BY year) AS rnk
+  FROM sales
+) R
+WHERE rnk = 1;
+```
+> 🎯 **Beats:** 44.65%
+
+**Using Tuple IN**
+```sql
+SELECT product_id, year AS first_year, quantity, price
+FROM sales
+WHERE (product_id, year) IN (
+  SELECT product_id, MIN(year) FROM sales
+  GROUP BY product_id
+);
+```
+> 🎯 **Beats:** 84.71%
+
+---
+
+### [596. Classes With at Least 5 Students](https://leetcode.com/problems/classes-more-than-5-students/)
+
+**Using DISTINCT**
+```sql
+SELECT class
+FROM courses
+GROUP BY class
+HAVING COUNT(DISTINCT student) >= 5;
+```
+
+**Simple**
+```sql
+SELECT class
+FROM courses
+GROUP BY 1
+HAVING COUNT(DISTINCT student) > 4;
+```
+
+---
+
+### [1729. Find Followers Count](https://leetcode.com/problems/find-followers-count/)
+
+*Coming soon...*
+
+---
+
+## 🔴 Hard
+
+*Coming soon...*
