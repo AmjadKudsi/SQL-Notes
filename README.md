@@ -657,8 +657,4 @@ HAVING COUNT(DISTINCT student) > 4;
 
 *Coming soon...*
 
----
 
-## 🔴 Hard
-
-*Coming soon...*
