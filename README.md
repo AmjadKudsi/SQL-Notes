@@ -1,7 +1,5 @@
 # LeetCode SQL 50 — MySQL Solutions
 
-## 📚 Index
-
 | # | Problem | Difficulty | Key Technique(s) | Best Performance |
 |---|---------|------------|------------------|-----------------|
 | 1 | [Recyclable and Low Fat Products](#1757-recyclable-and-low-fat-products) | 🟢 Easy | `WHERE` filter | — |
