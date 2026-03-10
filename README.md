@@ -148,6 +148,7 @@ GROUP BY V.customer_id;
 
 
 > Find all dates where the temperature was higher than the previous day's temperature.
+
 **Using LAG**
 ```sql
 SELECT id
