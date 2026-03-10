@@ -59,6 +59,7 @@
 
 ---
 
+<a id="1757-recyclable-and-low-fat-products"></a>
 ### 🟢 [1757. Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/)
 
 
@@ -69,6 +70,7 @@ SELECT product_id FROM products WHERE low_fats = 'Y' AND recyclable = 'Y';
 
 ---
 
+<a id="584-find-customer-referee"></a>
 ### 🟢 [584. Find Customer Referee](https://leetcode.com/problems/find-customer-referee/)
 
 
@@ -79,6 +81,7 @@ SELECT name FROM customer WHERE referee_id != 2 OR referee_id IS NULL;
 
 ---
 
+<a id="595-big-countries"></a>
 ### 🟢 [595. Big Countries](https://leetcode.com/problems/big-countries/)
 
 
@@ -89,6 +92,7 @@ SELECT name, population, area FROM world WHERE area >= 3000000 OR population >= 
 
 ---
 
+<a id="1148-article-views-i"></a>
 ### 🟢 [1148. Article Views I](https://leetcode.com/problems/article-views-i/)
 
 
@@ -99,6 +103,7 @@ SELECT DISTINCT author_id AS id FROM views WHERE author_id = viewer_id ORDER BY 
 
 ---
 
+<a id="1683-invalid-tweets"></a>
 ### 🟢 [1683. Invalid Tweets](https://leetcode.com/problems/invalid-tweets/)
 
 
@@ -109,6 +114,7 @@ SELECT tweet_id FROM tweets WHERE LENGTH(content) > 15;
 
 ---
 
+<a id="1378-replace-employee-id-with-the-unique-identifier"></a>
 ### 🟢 [1378. Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/)
 
 
@@ -119,6 +125,7 @@ SELECT U.unique_id, E.name FROM employees E LEFT JOIN employeeuni U ON E.id = U.
 
 ---
 
+<a id="1068-product-sales-analysis-i"></a>
 ### 🟢 [1068. Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/)
 
 
@@ -129,6 +136,7 @@ SELECT P.product_name, S.year, S.price FROM sales S JOIN product P ON S.product_
 
 ---
 
+<a id="1581-customer-who-visited-but-did-not-make-any-transactions"></a>
 ### 🟢 [1581. Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
 
 
@@ -144,6 +152,7 @@ GROUP BY V.customer_id;
 
 ---
 
+<a id="197-rising-temperature"></a>
 ### 🟢 [197. Rising Temperature](https://leetcode.com/problems/rising-temperature/)
 
 
@@ -214,6 +223,7 @@ WHERE DATE_DIFF(recordDate, prev_date, DAY) = 1
 
 ---
 
+<a id="1661-average-time-of-process-per-machine"></a>
 ### 🟢 [1661. Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
 
 
@@ -261,6 +271,7 @@ GROUP BY s.machine_id;
 
 ---
 
+<a id="577-employee-bonus"></a>
 ### 🟢 [577. Employee Bonus](https://leetcode.com/problems/employee-bonus/)
 
 
@@ -279,6 +290,7 @@ WHERE COALESCE(b.bonus, 0) < 1000;
 
 ---
 
+<a id="1280-students-and-examinations"></a>
 ### 🟢 [1280. Students and Examinations](https://leetcode.com/problems/students-and-examinations/)
 
 
@@ -308,6 +320,7 @@ ORDER BY student_id, subject_name;
 
 ---
 
+<a id="620-not-boring-movies"></a>
 ### 🟢 [620. Not Boring Movies](https://leetcode.com/problems/not-boring-movies/)
 
 
@@ -330,6 +343,7 @@ ORDER BY rating DESC;
 
 ---
 
+<a id="1251-average-selling-price"></a>
 ### 🟢 [1251. Average Selling Price](https://leetcode.com/problems/average-selling-price/)
 
 
@@ -364,6 +378,7 @@ GROUP BY P.product_id;
 
 ---
 
+<a id="570-managers-with-at-least-5-direct-reports"></a>
 ### 🟡 [570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports/)
 
 
@@ -392,6 +407,7 @@ JOIN (
 
 ---
 
+<a id="1934-confirmation-rate"></a>
 ### 🟡 [1934. Confirmation Rate](https://leetcode.com/problems/confirmation-rate/)
 
 
@@ -433,6 +449,7 @@ LEFT JOIN (
 
 ---
 
+<a id="1075-project-employees-i"></a>
 ### 🟢 [1075. Project Employees I](https://leetcode.com/problems/project-employees-i/)
 
 
@@ -455,6 +472,7 @@ GROUP BY project_id;
 
 ---
 
+<a id="1633-percentage-of-users-attended-a-contest"></a>
 ### 🟢 [1633. Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest/)
 
 
@@ -482,6 +500,7 @@ ORDER BY percentage DESC, contest_id;
 
 ---
 
+<a id="1211-queries-quality-and-percentage"></a>
 ### 🟢 [1211. Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage/)
 
 
@@ -509,6 +528,7 @@ GROUP BY query_name;
 
 ---
 
+<a id="1193-monthly-transactions-i"></a>
 ### 🟡 [1193. Monthly Transactions I](https://leetcode.com/problems/monthly-transactions-i/)
 
 
@@ -551,6 +571,7 @@ GROUP BY month, country;
 
 ---
 
+<a id="1174-immediate-food-delivery-ii"></a>
 ### 🟡 [1174. Immediate Food Delivery II](https://leetcode.com/problems/immediate-food-delivery-ii/)
 
 
@@ -568,6 +589,7 @@ FROM (
 
 ---
 
+<a id="550-game-play-analysis-iv"></a>
 ### 🟡 [550. Game Play Analysis IV](https://leetcode.com/problems/game-play-analysis-iv/)
 
 
@@ -617,6 +639,7 @@ FROM (
 
 ---
 
+<a id="2356-number-of-unique-subjects-taught-by-each-teacher"></a>
 ### 🟢 [2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/)
 
 
@@ -630,6 +653,7 @@ GROUP BY teacher_id;
 
 ---
 
+<a id="1141-user-activity-for-the-past-30-days-i"></a>
 ### 🟢 [1141. User Activity for the Past 30 Days I](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/)
 
 
@@ -666,6 +690,7 @@ GROUP BY activity_date;
 
 ---
 
+<a id="1070-product-sales-analysis-iii"></a>
 ### 🟡 [1070. Product Sales Analysis III](https://leetcode.com/problems/product-sales-analysis-iii/)
 
 
@@ -706,6 +731,7 @@ WHERE (product_id, year) IN (
 
 ---
 
+<a id="596-classes-with-at-least-5-students"></a>
 ### 🟢 [596. Classes With at Least 5 Students](https://leetcode.com/problems/classes-more-than-5-students/)
 
 
@@ -728,6 +754,7 @@ HAVING COUNT(DISTINCT student) > 4;
 
 ---
 
+<a id="1729-find-followers-count"></a>
 ### 🟢 [1729. Find Followers Count](https://leetcode.com/problems/find-followers-count/)
 
 
@@ -742,6 +769,7 @@ ORDER BY user_id;
 
 ---
 
+<a id="619-biggest-single-number"></a>
 ### 🟢 [619. Biggest Single Number](https://leetcode.com/problems/biggest-single-number/)
 
 
@@ -758,6 +786,7 @@ FROM (
 
 ---
 
+<a id="1045-customers-who-bought-all-products"></a>
 ### 🟡 [1045. Customers Who Bought All Products](https://leetcode.com/problems/customers-who-bought-all-products/)
 
 
@@ -771,6 +800,7 @@ HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM product);
 
 ---
 
+<a id="1731-the-number-of-employees-which-report-to-each-employee"></a>
 ### 🟢 [1731. The Number of Employees Which Report to Each Employee](https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee/)
 
 
@@ -801,6 +831,7 @@ ORDER BY M.employee_id;
 
 ---
 
+<a id="1789-primary-department-for-each-employee"></a>
 ### 🟢 [1789. Primary Department for Each Employee](https://leetcode.com/problems/primary-department-for-each-employee/)
 
 
@@ -844,6 +875,7 @@ OR employee_id IN (
 
 ---
 
+<a id="610-triangle-judgement"></a>
 ### 🟢 [610. Triangle Judgement](https://leetcode.com/problems/triangle-judgement/)
 
 
@@ -857,6 +889,7 @@ FROM triangle;
 
 ---
 
+<a id="180-consecutive-numbers"></a>
 ### 🟡 [180. Consecutive Numbers](https://leetcode.com/problems/consecutive-numbers/)
 
 
@@ -885,6 +918,7 @@ JOIN logs l3 ON l3.id = l1.id + 2 AND l3.num = l1.num;
 
 ---
 
+<a id="1164-product-price-at-a-given-date"></a>
 ### 🟡 [1164. Product Price at a Given Date](https://leetcode.com/problems/product-price-at-a-given-date/)
 
 
@@ -944,6 +978,7 @@ WHERE rnk = 1;
 
 ---
 
+<a id="1204-last-person-to-fit-in-the-bus"></a>
 ### 🟡 [1204. Last Person to Fit in the Bus](https://leetcode.com/problems/last-person-to-fit-in-the-bus/)
 
 
@@ -1005,6 +1040,7 @@ LIMIT 1;
 
 ---
 
+<a id="1907-count-salary-categories"></a>
 ### 🟡 [1907. Count Salary Categories](https://leetcode.com/problems/count-salary-categories/)
 
 
@@ -1038,6 +1074,7 @@ SELECT 'Low Salary', low_salary FROM categories;
 
 ---
 
+<a id="1978-employees-whose-manager-left-the-company"></a>
 ### 🟢 [1978. Employees Whose Manager Left the Company](https://leetcode.com/problems/employees-whose-manager-left-the-company/)
 
 
@@ -1062,6 +1099,7 @@ ORDER BY employee_id;
 
 ---
 
+<a id="626-exchange-seats"></a>
 ### 🟡 [626. Exchange Seats](https://leetcode.com/problems/exchange-seats/)
 
 
@@ -1110,6 +1148,7 @@ ORDER BY s1.id;
 
 ---
 
+<a id="1341-movie-rating"></a>
 ### 🟡 [1341. Movie Rating](https://leetcode.com/problems/movie-rating/)
 
 
@@ -1182,6 +1221,7 @@ LIMIT 1);
 
 ---
 
+<a id="1321-restaurant-growth"></a>
 ### 🟡 [1321. Restaurant Growth](https://leetcode.com/problems/restaurant-growth/)
 
 
@@ -1231,6 +1271,7 @@ ORDER BY visited_on;
 
 ---
 
+<a id="602-friend-requests-ii-who-has-the-most-friends"></a>
 ### 🟡 [602. Friend Requests II: Who Has the Most Friends](https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/)
 
 
@@ -1250,6 +1291,7 @@ LIMIT 1;
 
 ---
 
+<a id="585-investments-in-2016"></a>
 ### 🟡 [585. Investments in 2016](https://leetcode.com/problems/investments-in-2016/)
 
 
@@ -1282,6 +1324,7 @@ AND (lat, lon) IN (
 
 ---
 
+<a id="185-department-top-three-salaries"></a>
 ### 🔴 [185. Department Top Three Salaries](https://leetcode.com/problems/department-top-three-salaries/)
 
 
@@ -1300,6 +1343,7 @@ WHERE rnk < 4;
 
 ---
 
+<a id="1667-fix-names-in-a-table"></a>
 ### 🟢 [1667. Fix Names in a Table](https://leetcode.com/problems/fix-names-in-a-table/)
 
 
@@ -1322,6 +1366,7 @@ ORDER BY user_id;
 
 ---
 
+<a id="1527-patients-with-a-condition"></a>
 ### 🟢 [1527. Patients With a Condition](https://leetcode.com/problems/patients-with-a-condition/)
 
 
@@ -1345,6 +1390,7 @@ WHERE conditions LIKE 'DIAB1%'
 
 ---
 
+<a id="196-delete-duplicate-emails"></a>
 ### 🟢 [196. Delete Duplicate Emails](https://leetcode.com/problems/delete-duplicate-emails/)
 
 
@@ -1360,6 +1406,7 @@ JOIN Person p2
 
 ---
 
+<a id="176-second-highest-salary"></a>
 ### 🟡 [176. Second Highest Salary](https://leetcode.com/problems/second-highest-salary/)
 
 
@@ -1398,6 +1445,7 @@ SELECT (
 
 ---
 
+<a id="1484-group-sold-products-by-the-date"></a>
 ### 🟢 [1484. Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/)
 
 
@@ -1412,6 +1460,7 @@ ORDER BY sell_date;
 
 ---
 
+<a id="1327-list-the-products-ordered-in-a-period"></a>
 ### 🟢 [1327. List the Products Ordered in a Period](https://leetcode.com/problems/list-the-products-ordered-in-a-period/)
 
 
@@ -1443,6 +1492,7 @@ JOIN (
 
 ---
 
+<a id="1517-find-users-with-valid-e-mails"></a>
 ### 🟢 [1517. Find Users With Valid E-Mails](https://leetcode.com/problems/find-users-with-valid-e-mails/)
 
 
