@@ -24,13 +24,36 @@
 | 18 | [Percentage of Users Attended a Contest](#1633-percentage-of-users-attended-a-contest) | 🟢 Easy | Scalar subquery, `CROSS JOIN` | 73.76% |
 | 19 | [Queries Quality and Percentage](#1211-queries-quality-and-percentage) | 🟢 Easy | `AVG`, `SUM`, `CASE WHEN` | 96.29% |
 | 20 | [Monthly Transactions I](#1193-monthly-transactions-i) | 🟡 Medium | `DATE_FORMAT`, `LEFT`, `CASE WHEN` | 87.21% |
-| 21 | [Immediate Food Delivery II](#1174-immediate-food-delivery-ii) | 🟡 Medium | Subquery, `MIN` | 90.67% |
+| 21 | [Immediate Food Delivery II](#1174-immediate-food-delivery-ii) | 🟡 Medium | Subquery, `MIN` | 90.40% |
 | 22 | [Game Play Analysis IV](#550-game-play-analysis-iv) | 🟡 Medium | `CTE`, Subquery, Window Function | 96.18% |
-| 23 | [Number of Unique Subjects Taught by Each Teacher](#2356-number-of-unique-subjects-taught-by-each-teacher) | 🟢 Easy | `COUNT DISTINCT` | 91.25% |
+| 23 | [Number of Unique Subjects Taught by Each Teacher](#2356-number-of-unique-subjects-taught-by-each-teacher) | 🟢 Easy | `COUNT DISTINCT` | 90.92% |
 | 24 | [User Activity for the Past 30 Days I](#1141-user-activity-for-the-past-30-days-i) | 🟢 Easy | `BETWEEN`, `COUNT DISTINCT` | 81.29% |
 | 25 | [Product Sales Analysis III](#1070-product-sales-analysis-iii) | 🟡 Medium | `JOIN`, `RANK()`, Tuple `IN` | 84.71% |
 | 26 | [Classes With at Least 5 Students](#596-classes-with-at-least-5-students) | 🟢 Easy | `HAVING`, `COUNT DISTINCT` | — |
-| 27 | [Find Followers Count](#1729-find-followers-count) | 🟢 Easy | — | — |
+| 27 | [Find Followers Count](#1729-find-followers-count) | 🟢 Easy | `COUNT`, `GROUP BY` | 86.10% |
+| 28 | [Biggest Single Number](#619-biggest-single-number) | 🟢 Easy | Subquery, `MAX`, `HAVING` | 81.94% |
+| 29 | [Customers Who Bought All Products](#1045-customers-who-bought-all-products) | 🟡 Medium | `HAVING`, `COUNT DISTINCT` | 75.88% |
+| 30 | [The Number of Employees Which Report to Each Employee](#1731-the-number-of-employees-which-report-to-each-employee) | 🟢 Easy | Self Join, Subquery | 62.73% |
+| 31 | [Primary Department for Each Employee](#1789-primary-department-for-each-employee) | 🟢 Easy | `UNION ALL`, `PARTITION BY` | 70.77% |
+| 32 | [Triangle Judgement](#610-triangle-judgement) | 🟢 Easy | `CASE WHEN` | 86.78% |
+| 33 | [Consecutive Numbers](#180-consecutive-numbers) | 🟡 Medium | `LAG`/`LEAD`, Self Join | 77.29% |
+| 34 | [Product Price at a Given Date](#1164-product-price-at-a-given-date) | 🟡 Medium | Subquery, `UNION`, `CTE` | 63.65% |
+| 35 | [Last Person to Fit in the Bus](#1204-last-person-to-fit-in-the-bus) | 🟡 Medium | Running sum, `CTE`, Variables | 64.79% |
+| 36 | [Count Salary Categories](#1907-count-salary-categories) | 🟡 Medium | `UNION ALL`, `CTE` | 96.78% |
+| 37 | [Employees Whose Manager Left the Company](#1978-employees-whose-manager-left-the-company) | 🟢 Easy | `LEFT JOIN`, Subquery | 82.67% |
+| 38 | [Exchange Seats](#626-exchange-seats) | 🟡 Medium | `LAG`/`LEAD`, Self Join | 83.56% |
+| 39 | [Movie Rating](#1341-movie-rating) | 🟡 Medium | Subquery, `CTE`, `UNION ALL` | 64.07% |
+| 40 | [Restaurant Growth](#1321-restaurant-growth) | 🟡 Medium | `CTE`, Rolling Window | 95.32% |
+| 41 | [Friend Requests II: Who Has the Most Friends](#602-friend-requests-ii-who-has-the-most-friends) | 🟡 Medium | `UNION ALL`, `COUNT` | 91.58% |
+| 42 | [Investments in 2016](#585-investments-in-2016) | 🟡 Medium | `PARTITION BY`, Subquery | 98.70% |
+| 43 | [Department Top Three Salaries](#185-department-top-three-salaries) | 🔴 Hard | `DENSE_RANK`, `PARTITION BY` | 82.98% |
+| 44 | [Fix Names in a Table](#1667-fix-names-in-a-table) | 🟢 Easy | `CONCAT`, `UPPER`/`LOWER` | — |
+| 45 | [Patients With a Condition](#1527-patients-with-a-condition) | 🟢 Easy | `REGEXP`, `LIKE` | 80.91% |
+| 46 | [Delete Duplicate Emails](#196-delete-duplicate-emails) | 🟢 Easy | Self Join `DELETE` | 70.86% |
+| 47 | [Second Highest Salary](#176-second-highest-salary) | 🟡 Medium | `OFFSET`, `MAX`, `DENSE_RANK` | 83.95% |
+| 48 | [Group Sold Products By The Date](#1484-group-sold-products-by-the-date) | 🟢 Easy | `GROUP_CONCAT` | — |
+| 49 | [List the Products Ordered in a Period](#1327-list-the-products-ordered-in-a-period) | 🟢 Easy | `JOIN`, pre-agg | 76.36% |
+| 50 | [Find Users With Valid E-Mails](#1517-find-users-with-valid-e-mails) | 🟢 Easy | `REGEXP` | 97.85% |
 
 > 💡 **Reading the table:** Each problem links directly to its solution below. Where multiple approaches are provided, the *Best Performance* column shows the top `🎯 Beats` score achieved.
 
@@ -655,6 +678,678 @@ HAVING COUNT(DISTINCT student) > 4;
 
 ### [1729. Find Followers Count](https://leetcode.com/problems/find-followers-count/)
 
-*Coming soon...*
+```sql
+SELECT user_id, COUNT(follower_id) AS followers_count
+FROM followers
+GROUP BY user_id
+ORDER BY user_id;
+```
+> 🎯 **Beats:** 86.10%
 
+---
 
+### [619. Biggest Single Number](https://leetcode.com/problems/biggest-single-number/)
+
+```sql
+SELECT MAX(num) AS num
+FROM (
+  SELECT num FROM mynumbers
+  GROUP BY num
+  HAVING COUNT(*) = 1
+) N;
+```
+> 🎯 **Beats:** 81.94%
+
+---
+
+### [1045. Customers Who Bought All Products](https://leetcode.com/problems/customers-who-bought-all-products/)
+
+```sql
+SELECT customer_id FROM customer
+GROUP BY customer_id
+HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM product);
+```
+> 🎯 **Beats:** 75.88%
+
+---
+
+### [1731. The Number of Employees Which Report to Each Employee](https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee/)
+
+**Subquery Aggregates First, Then Join**
+```sql
+SELECT E.employee_id, E.name, M.reports_count, M.average_age
+FROM employees E
+JOIN (
+  SELECT reports_to, COUNT(*) AS reports_count, ROUND(AVG(age)) AS average_age
+  FROM employees
+  WHERE reports_to IS NOT NULL
+  GROUP BY reports_to
+) M ON E.employee_id = M.reports_to
+ORDER BY E.employee_id;
+```
+> 🎯 **Beats:** 44.82%
+
+**Direct Join, Aggregates After**
+```sql
+SELECT M.employee_id, M.name, COUNT(*) AS reports_count, ROUND(AVG(E.age)) AS average_age
+FROM Employees M
+JOIN Employees E ON E.reports_to = M.employee_id
+GROUP BY M.employee_id
+ORDER BY M.employee_id;
+```
+> 🎯 **Beats:** 62.73%
+
+---
+
+### [1789. Primary Department for Each Employee](https://leetcode.com/problems/primary-department-for-each-employee/)
+
+**Using UNION ALL**
+```sql
+SELECT employee_id, department_id FROM employee
+GROUP BY employee_id
+HAVING COUNT(*) = 1
+
+UNION ALL
+
+SELECT employee_id, department_id FROM employee
+WHERE primary_flag = 'Y';
+```
+> 🎯 **Beats:** 46.54%
+
+**Using PARTITION BY**
+```sql
+SELECT employee_id, department_id
+FROM (
+  SELECT employee_id, department_id, primary_flag,
+    COUNT(*) OVER (PARTITION BY employee_id) AS dept_count
+  FROM employee
+) E
+WHERE primary_flag = 'Y' OR dept_count = 1;
+```
+> 🎯 **Beats:** 63.04%
+
+**Simple**
+```sql
+SELECT employee_id, department_id FROM employee
+WHERE primary_flag = 'Y'
+OR employee_id IN (
+  SELECT employee_id FROM employee
+  GROUP BY employee_id
+  HAVING COUNT(*) = 1
+);
+```
+> 🎯 **Beats:** 70.77%
+
+---
+
+### [610. Triangle Judgement](https://leetcode.com/problems/triangle-judgement/)
+
+```sql
+SELECT x, y, z,
+  CASE WHEN x+y > z AND y+z > x AND x+z > y THEN 'Yes' ELSE 'No' END AS triangle
+FROM triangle;
+```
+> 🎯 **Beats:** 86.78%
+
+---
+
+### [180. Consecutive Numbers](https://leetcode.com/problems/consecutive-numbers/)
+
+**Using LAG() and LEAD()**
+```sql
+SELECT DISTINCT num AS ConsecutiveNums
+FROM (
+  SELECT num,
+    LAG(num) OVER (ORDER BY id) AS prev,
+    LEAD(num) OVER (ORDER BY id) AS next
+  FROM logs
+) N
+WHERE N.num = N.prev AND N.num = N.next;
+```
+> 🎯 **Beats:** 20.76%
+
+**Simple Self Join**
+```sql
+SELECT DISTINCT l1.num AS ConsecutiveNums
+FROM logs l1
+JOIN logs l2 ON l2.id = l1.id + 1 AND l2.num = l1.num
+JOIN logs l3 ON l3.id = l1.id + 2 AND l3.num = l1.num;
+```
+> 🎯 **Beats:** 77.29%
+
+---
+
+### [1164. Product Price at a Given Date](https://leetcode.com/problems/product-price-at-a-given-date/)
+
+**Using Subquery**
+```sql
+SELECT DISTINCT P.product_id, COALESCE(Q.new_price, 10) AS price
+FROM products P
+LEFT JOIN (
+  SELECT product_id, new_price FROM products
+  WHERE (product_id, change_date) IN (
+    SELECT product_id, MAX(change_date)
+    FROM products
+    WHERE change_date <= '2019-08-16'
+    GROUP BY product_id
+  )
+) Q ON P.product_id = Q.product_id;
+```
+> 🎯 **Beats:** 63.65%
+
+**Using UNION**
+```sql
+SELECT DISTINCT product_id,
+  FIRST_VALUE(new_price) OVER (PARTITION BY product_id ORDER BY change_date DESC) AS price
+FROM products
+WHERE change_date <= '2019-08-16'
+
+UNION
+
+SELECT DISTINCT product_id, 10
+FROM products
+WHERE product_id NOT IN (
+  SELECT product_id FROM products WHERE change_date <= '2019-08-16'
+);
+```
+> 🎯 **Beats:** 54.30%
+
+**Using CTE**
+```sql
+WITH CTE AS (
+  SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY change_date DESC) AS rnk
+  FROM Products
+  WHERE change_date <= '2019-08-16'
+)
+SELECT product_id, 10 AS price
+FROM Products
+GROUP BY product_id
+HAVING MIN(change_date) > '2019-08-16'
+
+UNION ALL
+
+SELECT product_id, new_price
+FROM CTE
+WHERE rnk = 1;
+```
+> 🎯 **Beats:** 46.53%
+
+---
+
+### [1204. Last Person to Fit in the Bus](https://leetcode.com/problems/last-person-to-fit-in-the-bus/)
+
+**Using Subquery**
+```sql
+SELECT person_name
+FROM (
+  SELECT person_name, turn,
+    SUM(weight) OVER (ORDER BY turn) AS running_weight
+  FROM queue
+) q
+WHERE running_weight <= 1000
+ORDER BY turn DESC
+LIMIT 1;
+```
+> 🎯 **Beats:** 64.79%
+
+**Using CTE**
+```sql
+WITH W AS (
+  SELECT *,
+    SUM(weight) OVER (ORDER BY turn) AS running_weight
+  FROM queue
+)
+SELECT person_name FROM W
+WHERE running_weight < 1001
+ORDER BY turn DESC
+LIMIT 1;
+```
+> 🎯 **Beats:** 48.92%
+
+**Using MySQL Variables**
+```sql
+SELECT person_name
+FROM (
+  SELECT person_name, turn,
+    @total := @total + weight AS running_weight
+  FROM queue, (SELECT @total := 0) T
+  ORDER BY turn
+) W
+WHERE running_weight <= 1000
+ORDER BY turn DESC
+LIMIT 1;
+```
+> 🎯 **Beats:** 63.08%
+
+**Using JOIN**
+```sql
+SELECT q1.person_name
+FROM queue q1
+JOIN queue q2 ON q2.turn <= q1.turn
+GROUP BY q1.turn, q1.person_name
+HAVING SUM(q2.weight) <= 1000
+ORDER BY q1.turn DESC
+LIMIT 1;
+```
+> 🎯 **Beats:** 7.90%
+
+---
+
+### [1907. Count Salary Categories](https://leetcode.com/problems/count-salary-categories/)
+
+**Using UNION ALL**
+```sql
+SELECT 'High Salary' AS category, SUM(income > 50000) AS accounts_count FROM accounts
+UNION ALL
+SELECT 'Average Salary', SUM(income >= 20000 AND income <= 50000) FROM accounts
+UNION ALL
+SELECT 'Low Salary', SUM(income < 20000) FROM accounts;
+```
+> 🎯 **Beats:** 34.88%
+
+**Using CTE**
+```sql
+WITH categories AS (
+  SELECT
+    SUM(income > 50000) AS high_salary,
+    SUM(income >= 20000 AND income <= 50000) AS avg_salary,
+    SUM(income < 20000) AS low_salary
+  FROM accounts
+)
+SELECT 'High Salary' AS category, high_salary AS accounts_count FROM categories
+UNION ALL
+SELECT 'Average Salary', avg_salary FROM categories
+UNION ALL
+SELECT 'Low Salary', low_salary FROM categories;
+```
+> 🎯 **Beats:** 96.78%
+
+---
+
+### [1978. Employees Whose Manager Left the Company](https://leetcode.com/problems/employees-whose-manager-left-the-company/)
+
+**Using LEFT JOIN**
+```sql
+SELECT X.employee_id FROM employees X
+LEFT JOIN employees Y ON X.manager_id = Y.employee_id
+WHERE X.salary < 30000 AND X.manager_id IS NOT NULL AND Y.employee_id IS NULL
+ORDER BY X.employee_id;
+```
+> 🎯 **Beats:** 82.67%
+
+**Using Subquery**
+```sql
+SELECT employee_id FROM employees
+WHERE salary < 30000 AND manager_id IS NOT NULL
+  AND manager_id NOT IN (SELECT employee_id FROM Employees)
+ORDER BY employee_id;
+```
+> 🎯 **Beats:** 10.87%
+
+---
+
+### [626. Exchange Seats](https://leetcode.com/problems/exchange-seats/)
+
+**Using LAG(), LEAD() and Subquery**
+```sql
+SELECT id,
+  CASE
+    WHEN id % 2 = 0 THEN prev_student
+    WHEN id = total THEN student
+    ELSE next_student
+  END AS student
+FROM (
+  SELECT id, student,
+    LAG(student) OVER (ORDER BY id) AS prev_student,
+    LEAD(student) OVER (ORDER BY id) AS next_student,
+    COUNT(*) OVER () AS total
+  FROM Seat
+) T
+ORDER BY id;
+```
+> 🎯 **Beats:** 49%
+
+**Simple**
+```sql
+SELECT id,
+  CASE WHEN id % 2 = 0 THEN LAG(student) OVER (ORDER BY id)
+       WHEN id = (MAX(id) OVER ()) THEN student
+       ELSE LEAD(student) OVER (ORDER BY id)
+  END AS student
+FROM seat
+ORDER BY id;
+```
+> 🎯 **Beats:** 76.48%
+
+**Using Self Join**
+```sql
+SELECT s1.id,
+  COALESCE(s2.student, s1.student) AS student
+FROM Seat s1
+LEFT JOIN Seat s2
+  ON s2.id = s1.id + CASE WHEN s1.id % 2 = 1 THEN 1 ELSE -1 END
+ORDER BY s1.id;
+```
+> 🎯 **Beats:** 83.56%
+
+---
+
+### [1341. Movie Rating](https://leetcode.com/problems/movie-rating/)
+
+**Using Subqueries**
+```sql
+(SELECT U.name AS results
+FROM (
+  SELECT user_id, COUNT(*) AS rate_count FROM movierating GROUP BY user_id
+) MRO
+JOIN users U ON MRO.user_id = U.user_id
+ORDER BY rate_count DESC, U.name
+LIMIT 1)
+
+UNION ALL
+
+(SELECT M.title AS results
+FROM (
+  SELECT movie_id, AVG(rating) AS avg_rat FROM movierating
+  WHERE created_at >= '2020-02-01' AND created_at < '2020-03-01'
+  GROUP BY movie_id
+) MRT
+JOIN movies M ON MRT.movie_id = M.movie_id
+ORDER BY avg_rat DESC, M.title
+LIMIT 1);
+```
+> 🎯 **Beats:** 21.62%
+
+**Using CTEs**
+```sql
+WITH user_ratings AS (
+  SELECT U.name, COUNT(*) AS rate_count,
+    RANK() OVER (ORDER BY COUNT(*) DESC, U.name) AS rnk
+  FROM movierating MR
+  JOIN users U ON MR.user_id = U.user_id
+  GROUP BY U.name
+),
+movie_ratings AS (
+  SELECT M.title, AVG(rating) AS avg_rat,
+    RANK() OVER (ORDER BY AVG(rating) DESC, M.title) AS rnk
+  FROM movierating MR
+  JOIN movies M ON MR.movie_id = M.movie_id
+  WHERE MR.created_at >= '2020-02-01' AND MR.created_at < '2020-03-01'
+  GROUP BY M.title
+)
+SELECT name AS results FROM user_ratings WHERE rnk = 1
+UNION ALL
+SELECT title FROM movie_ratings WHERE rnk = 1;
+```
+> 🎯 **Beats:** 22.24%
+
+**Using JOIN**
+```sql
+(SELECT U.name AS results FROM users U
+JOIN movierating MR ON U.user_id = MR.user_id
+GROUP BY U.name
+ORDER BY COUNT(MR.user_id) DESC, U.name
+LIMIT 1)
+
+UNION ALL
+
+(SELECT M.title AS results FROM movies M
+JOIN movierating MR ON M.movie_id = MR.movie_id
+WHERE MR.created_at >= '2020-02-01' AND MR.created_at < '2020-03-01'
+GROUP BY M.title
+ORDER BY AVG(MR.rating) DESC, M.title
+LIMIT 1);
+```
+> 🎯 **Beats:** 64.07%
+
+---
+
+### [1321. Restaurant Growth](https://leetcode.com/problems/restaurant-growth/)
+
+**Using CTEs**
+```sql
+WITH daily_tot AS (
+  SELECT visited_on, SUM(amount) AS amount
+  FROM Customer
+  GROUP BY visited_on
+),
+rolling AS (
+  SELECT visited_on,
+    SUM(amount) OVER (ORDER BY visited_on
+      RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW) AS amount,
+    ROUND(AVG(amount) OVER (ORDER BY visited_on
+      RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW), 2) AS average_amount
+  FROM daily_tot
+)
+SELECT * FROM rolling
+WHERE visited_on >= (SELECT MIN(visited_on) + INTERVAL 6 DAY FROM daily_tot)
+ORDER BY visited_on;
+```
+> 🎯 **Beats:** 49.16%
+
+**Optimized**
+```sql
+WITH daily_tot AS (
+  SELECT visited_on, SUM(amount) AS amount
+  FROM Customer
+  GROUP BY visited_on
+),
+rolling AS (
+  SELECT visited_on,
+    SUM(amount) OVER (ORDER BY visited_on
+      RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW) AS amount
+  FROM daily_tot
+)
+SELECT visited_on,
+  amount,
+  ROUND(amount / 7, 2) AS average_amount
+FROM rolling
+WHERE visited_on >= (SELECT MIN(visited_on) + INTERVAL 6 DAY FROM daily_tot)
+ORDER BY visited_on;
+```
+> 🎯 **Beats:** 95.32%
+
+---
+
+### [602. Friend Requests II: Who Has the Most Friends](https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/)
+
+```sql
+SELECT id, COUNT(*) AS num
+FROM (
+  SELECT requester_id AS id FROM requestaccepted
+  UNION ALL
+  SELECT accepter_id AS id FROM requestaccepted
+) I
+GROUP BY id
+ORDER BY num DESC
+LIMIT 1;
+```
+> 🎯 **Beats:** 91.58%
+
+---
+
+### [585. Investments in 2016](https://leetcode.com/problems/investments-in-2016/)
+
+**Using PARTITION BY**
+```sql
+SELECT ROUND(SUM(tiv_2016), 2) AS tiv_2016
+FROM (
+  SELECT tiv_2016,
+    COUNT(*) OVER (PARTITION BY tiv_2015) AS f_one,
+    COUNT(*) OVER (PARTITION BY lat, lon) AS f_two
+  FROM insurance
+) I
+WHERE f_one > 1 AND f_two = 1;
+```
+> 🎯 **Beats:** 27.39%
+
+**Using Subqueries**
+```sql
+SELECT ROUND(SUM(tiv_2016), 2) AS tiv_2016
+FROM insurance
+WHERE tiv_2015 IN (
+  SELECT tiv_2015 FROM insurance GROUP BY tiv_2015 HAVING COUNT(*) > 1
+)
+AND (lat, lon) IN (
+  SELECT lat, lon FROM insurance GROUP BY lat, lon HAVING COUNT(*) = 1
+);
+```
+> 🎯 **Beats:** 98.70%
+
+---
+
+### [185. Department Top Three Salaries](https://leetcode.com/problems/department-top-three-salaries/)
+
+```sql
+SELECT department, employee, salary
+FROM (
+  SELECT D.name AS department, E.name AS employee, E.salary,
+    DENSE_RANK() OVER (PARTITION BY D.name ORDER BY E.salary DESC) AS rnk
+  FROM department D
+  JOIN employee E ON E.departmentid = D.id
+) R
+WHERE rnk < 4;
+```
+> 🎯 **Beats:** 82.98%
+
+---
+
+### [1667. Fix Names in a Table](https://leetcode.com/problems/fix-names-in-a-table/)
+
+**Using LEFT, SUBSTRING**
+```sql
+SELECT user_id,
+  CONCAT(UPPER(LEFT(name, 1)), LOWER(SUBSTRING(name, 2))) AS name
+FROM users
+ORDER BY user_id;
+```
+
+**Using LEFT, MID**
+```sql
+SELECT user_id,
+  CONCAT(UPPER(LEFT(name, 1)), LOWER(MID(name, 2))) AS name
+FROM users
+ORDER BY user_id;
+```
+
+---
+
+### [1527. Patients With a Condition](https://leetcode.com/problems/patients-with-a-condition/)
+
+**Using REGEXP**
+```sql
+SELECT patient_id, patient_name, conditions
+FROM patients
+WHERE conditions REGEXP '(^| )DIAB1';
+```
+> 🎯 **Beats:** 80.91%
+
+**Using LIKE**
+```sql
+SELECT patient_id, patient_name, conditions
+FROM Patients
+WHERE conditions LIKE 'DIAB1%'
+   OR conditions LIKE '% DIAB1%';
+```
+> 🎯 **Beats:** 39.78%
+
+---
+
+### [196. Delete Duplicate Emails](https://leetcode.com/problems/delete-duplicate-emails/)
+
+```sql
+DELETE p1
+FROM Person p1
+JOIN Person p2
+  ON p1.email = p2.email
+  AND p1.id > p2.id;
+```
+> 🎯 **Beats:** 70.86%
+
+---
+
+### [176. Second Highest Salary](https://leetcode.com/problems/second-highest-salary/)
+
+**Using OFFSET**
+```sql
+SELECT (
+  SELECT DISTINCT salary FROM employee
+  ORDER BY salary DESC
+  LIMIT 1 OFFSET 1
+) AS SecondHighestSalary;
+```
+> 🎯 **Beats:** 83.95%
+
+**Using MAX**
+```sql
+SELECT (
+  SELECT MAX(salary) FROM employee
+  WHERE salary < (SELECT MAX(salary) FROM Employee)
+) AS SecondHighestSalary;
+```
+> 🎯 **Beats:** 74.84%
+
+**Using DENSE_RANK**
+```sql
+SELECT (
+  SELECT DISTINCT salary
+  FROM (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+    FROM employee
+  ) R
+  WHERE rnk = 2
+) AS SecondHighestSalary;
+```
+> 🎯 **Beats:** 49.38%
+
+---
+
+### [1484. Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/)
+
+```sql
+SELECT sell_date, COUNT(DISTINCT product) AS num_sold,
+  GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',') AS products
+FROM activities
+GROUP BY sell_date
+ORDER BY sell_date;
+```
+
+---
+
+### [1327. List the Products Ordered in a Period](https://leetcode.com/problems/list-the-products-ordered-in-a-period/)
+
+**Using JOIN**
+```sql
+SELECT P.product_name, SUM(O.unit) AS unit
+FROM products P
+JOIN orders O ON P.product_id = O.product_id
+WHERE LEFT(O.order_date, 7) = '2020-02'
+GROUP BY P.product_name
+HAVING unit >= 100;
+```
+> 🎯 **Beats:** 40.38%
+
+**Pre-agg**
+```sql
+SELECT P.product_name, O.unit
+FROM Products P
+JOIN (
+  SELECT product_id, SUM(unit) AS unit
+  FROM orders
+  WHERE order_date >= '2020-02-01' AND order_date < '2020-03-01'
+  GROUP BY product_id
+  HAVING SUM(unit) >= 100
+) O ON P.product_id = O.product_id;
+```
+> 🎯 **Beats:** 76.36%
+
+---
+
+### [1517. Find Users With Valid E-Mails](https://leetcode.com/problems/find-users-with-valid-e-mails/)
+
+```sql
+SELECT * FROM Users
+WHERE mail REGEXP '^[a-zA-Z][a-zA-Z0-9._-]*@leetcode\.com$'
+AND mail LIKE BINARY '%@leetcode.com';
+```
+> 🎯 **Beats:** 97.85%
