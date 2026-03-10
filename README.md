@@ -219,6 +219,7 @@ WHERE DATE_DIFF(recordDate, prev_date, DAY) = 1
 
 
 > Calculate the average time each machine takes to complete a process across all its process runs.
+
 **Using Conditional Aggregation in Subquery**
 ```sql
 SELECT machine_id, ROUND(AVG(process_time), 3) AS processing_time
@@ -266,6 +267,7 @@ GROUP BY s.machine_id;
 
 
 > Report the name and bonus of each employee whose bonus is less than 1000 or who has no bonus at all.
+
 **Simple**
 ```sql
 SELECT e.name, b.bonus FROM employee e LEFT JOIN bonus b ON e.empId = b.empId
@@ -284,6 +286,7 @@ WHERE COALESCE(b.bonus, 0) < 1000;
 
 
 > For every student and every subject, report how many times that student attended an exam for that subject.
+
 **Using CROSS JOIN**
 ```sql
 SELECT st.student_id, st.student_name, su.subject_name, COUNT(e.subject_name) AS attended_exams
@@ -313,6 +316,7 @@ ORDER BY student_id, subject_name;
 
 
 > Find movies with an odd-numbered ID and a description that is not "boring", sorted by rating descending.
+
 **Using MOD (%)**
 ```sql
 SELECT id, movie, description, rating FROM cinema
@@ -335,6 +339,7 @@ ORDER BY rating DESC;
 
 
 > Calculate the average selling price for each product weighted by the number of units sold.
+
 **JOIN first, AGG later**
 ```sql
 SELECT P.product_id,
@@ -369,6 +374,7 @@ GROUP BY P.product_id;
 
 
 > Find managers who have at least five employees reporting directly to them.
+
 **Using IN**
 ```sql
 SELECT e.name FROM employee e
@@ -397,6 +403,7 @@ JOIN (
 
 
 > Calculate the rate at which each user confirmed their messages out of all messages sent to them.
+
 **Using COALESCE**
 ```sql
 SELECT S.user_id,
@@ -438,6 +445,7 @@ LEFT JOIN (
 
 
 > Find the average years of experience of employees assigned to each project.
+
 **Using AVG**
 ```sql
 SELECT project_id, ROUND(AVG(E.experience_years), 2) AS average_years
@@ -460,6 +468,7 @@ GROUP BY project_id;
 
 
 > Calculate the percentage of all users who registered for each contest, sorted by percentage then contest ID.
+
 **Using Scalar Subquery**
 ```sql
 SELECT contest_id,
@@ -487,6 +496,7 @@ ORDER BY percentage DESC, contest_id;
 
 
 > For each query, calculate its average quality rating and the percentage of its results rated as poor.
+
 **Using SUM**
 ```sql
 SELECT query_name,
@@ -514,6 +524,7 @@ GROUP BY query_name;
 
 
 > For each month and country, summarize the total number of transactions and the count and amount of approved ones.
+
 **Using DATE_FORMAT**
 ```sql
 SELECT DATE_FORMAT(trans_date, '%Y-%m') AS month, country,
@@ -573,6 +584,7 @@ FROM (
 
 
 > Find the fraction of players who logged in again the day immediately after their first login.
+
 **Using CTE**
 ```sql
 WITH first_login AS (
@@ -635,6 +647,7 @@ GROUP BY teacher_id;
 
 
 > Count the number of active users per day within a specific 30-day window.
+
 **Using BETWEEN**
 ```sql
 SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
@@ -671,6 +684,7 @@ GROUP BY activity_date;
 
 
 > For each product, report the first year it was ever sold along with the quantity and price that year.
+
 **Using JOIN**
 ```sql
 SELECT S.product_id, S.year AS first_year, S.quantity, S.price
@@ -711,6 +725,7 @@ WHERE (product_id, year) IN (
 
 
 > Find all classes that have at least five students enrolled.
+
 **Using DISTINCT**
 ```sql
 SELECT class
@@ -776,6 +791,7 @@ HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM product);
 
 
 > For each manager, report the number of direct reports and the average age of those reports rounded to the nearest integer.
+
 **Subquery Aggregates First, Then Join**
 ```sql
 SELECT E.employee_id, E.name, M.reports_count, M.average_age
@@ -806,6 +822,7 @@ ORDER BY M.employee_id;
 
 
 > Find the primary department for each employee — the single department if they only belong to one, or the one flagged as primary.
+
 **Using UNION ALL**
 ```sql
 SELECT employee_id, department_id FROM employee
@@ -862,6 +879,7 @@ FROM triangle;
 
 
 > Find all numbers that appear at least three times consecutively in the table.
+
 **Using LAG() and LEAD()**
 ```sql
 SELECT DISTINCT num AS ConsecutiveNums
@@ -890,6 +908,7 @@ JOIN logs l3 ON l3.id = l1.id + 2 AND l3.num = l1.num;
 
 
 > Find the price of each product on a specific date, defaulting to 10 if no price change had occurred before that date.
+
 **Using Subquery**
 ```sql
 SELECT DISTINCT P.product_id, COALESCE(Q.new_price, 10) AS price
@@ -949,6 +968,7 @@ WHERE rnk = 1;
 
 
 > Find the name of the last person who can board the bus without the total weight exceeding the limit.
+
 **Using Subquery**
 ```sql
 SELECT person_name
@@ -1010,6 +1030,7 @@ LIMIT 1;
 
 
 > Count how many employees fall into each of three salary categories: low, average, and high.
+
 **Using UNION ALL**
 ```sql
 SELECT 'High Salary' AS category, SUM(income > 50000) AS accounts_count FROM accounts
@@ -1043,6 +1064,7 @@ SELECT 'Low Salary', low_salary FROM categories;
 
 
 > Find employees with a low salary whose manager no longer exists in the company.
+
 **Using LEFT JOIN**
 ```sql
 SELECT X.employee_id FROM employees X
@@ -1067,6 +1089,7 @@ ORDER BY employee_id;
 
 
 > Swap the seat IDs of every two consecutive students; if the total count is odd, the last student keeps their seat.
+
 **Using LAG(), LEAD() and Subquery**
 ```sql
 SELECT id,
@@ -1115,6 +1138,7 @@ ORDER BY s1.id;
 
 
 > Find the user who rated the most movies and the movie with the highest average rating in a specific month.
+
 **Using Subqueries**
 ```sql
 (SELECT U.name AS results
@@ -1187,6 +1211,7 @@ LIMIT 1);
 
 
 > Compute the 7-day moving average of daily customer spending, only for days that have a full 7-day window available.
+
 **Using CTEs**
 ```sql
 WITH daily_tot AS (
@@ -1255,6 +1280,7 @@ LIMIT 1;
 
 
 > Sum the 2016 investment values for policyholders who share a 2015 value with at least one other policyholder but have a unique geographic location.
+
 **Using PARTITION BY**
 ```sql
 SELECT ROUND(SUM(tiv_2016), 2) AS tiv_2016
@@ -1305,6 +1331,7 @@ WHERE rnk < 4;
 
 
 > Correct the formatting of user names so only the first letter is uppercase and the rest are lowercase.
+
 **Using LEFT, SUBSTRING**
 ```sql
 SELECT user_id,
@@ -1327,6 +1354,7 @@ ORDER BY user_id;
 
 
 > Find patients who have been diagnosed with Type I Diabetes based on their conditions field.
+
 **Using REGEXP**
 ```sql
 SELECT patient_id, patient_name, conditions
@@ -1365,6 +1393,7 @@ JOIN Person p2
 
 
 > Find the second highest distinct salary in the table, returning null if it does not exist.
+
 **Using OFFSET**
 ```sql
 SELECT (
@@ -1417,6 +1446,7 @@ ORDER BY sell_date;
 
 
 > Find products that had at least 100 units ordered in a specific month, along with the total units ordered.
+
 **Using JOIN**
 ```sql
 SELECT P.product_name, SUM(O.unit) AS unit
